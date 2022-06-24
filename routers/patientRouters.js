@@ -45,8 +45,7 @@ patientRouter.patch("/:id", async (req,res)=>{
         console.log(error);
     }
 });
-patientRouter.post("/",(req,res)=>{
-    try {
+patientRouter.post("/",async (req,res)=>{
         const patient = new Patient({
             "_id":req.body._id,
             "password":req.body.password,
@@ -60,6 +59,7 @@ patientRouter.post("/",(req,res)=>{
             "address":req.body.address,
             "donate":req.body.donate
         })
+    try{
         patient.save().then((data)=>{
             res.json({
                 "message":"patient created successfully",
