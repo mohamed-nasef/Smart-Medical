@@ -1,6 +1,5 @@
 const Patient = require("../Modules/patientModules");
 const express = require("express");
-//const { errorMonitor } = require("events");
 const patientRouter = express.Router();
 
 patientRouter.get("/", async (req,res)=>{
@@ -43,11 +42,12 @@ patientRouter.patch("/:id", async (req,res)=>{
         res.json(patient);
     } catch(error)
     {
-        console.log(error);id
+        console.log(error);
     }
 });
 patientRouter.post("/",(req,res)=>{
-    const patient = new Patient({
+    try {
+        const patient = new Patient({
             "_id":req.body._id,
             "password":req.body.password,
             "fullName":req.body.fullName,
@@ -59,13 +59,16 @@ patientRouter.post("/",(req,res)=>{
             "gender":req.body.gender,
             "address":req.body.address,
             "donate":req.body.donate
-    })
-    patient.save().then((data)=>{
-        res.json({
-            "message":"patient created successfully",
-            "data":data
-    })
-    })
+        })
+        patient.save().then((data)=>{
+            res.json({
+                "message":"patient created successfully",
+                "data":data
+            })
+        })
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 module.exports = patientRouter;
