@@ -57,18 +57,18 @@ patientRouter.patch("/:id", async (req,res)=>{
     }
 });
 patientRouter.post("/",async (req,res)=>{
-        const patient = new Patient({
-            "_id":req.body._id,
-            "password":req.body.password,
-            "fullName":req.body.fullName,
-            "bloodType":req.body.bloodType,
-            "height":req.body.height,
-            "weight":req.body.weight,
-            "phone":req.body.phone,
-            "birthDate":req.body.birthDate,
-            "gender":req.body.gender,
-            "address":req.body.address,
-            "donate":req.body.donate
+    const patient = new Patient({
+      "_id":req.body._id,
+      "password":req.body.password,
+      "fullName":req.body.fullName,
+      "bloodType":req.body.bloodType,
+      "height":req.body.height,
+      "weight":req.body.weight,
+      "phone":req.body.phone,
+      "birthDate":req.body.birthDate,
+      "gender":req.body.gender,
+      "address":req.body.address,
+      "donate":req.body.donate
         })
        try{
         const patientData = await patient.save()
