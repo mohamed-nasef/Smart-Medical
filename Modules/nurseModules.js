@@ -6,7 +6,7 @@ const nurseModule = myMongoose.Schema(
             type : String,
            // pattern : "^([p]|[P])[0-9]{14}$",
             required :true ,
-            match: [/^([n]|[N])[0-9]{14}$/,'It must be like ( P or p +National Id)']
+            match: [/^([n]|[N])[0-9]{14}$/,'It must be like ( N or n + National Id)']
 
         },
           "password": {
