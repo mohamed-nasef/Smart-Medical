@@ -46,6 +46,7 @@ patientRouter.patch("/:id", async (req,res)=>{
             "weight":req.body.weight,
             "phone":req.body.phone,
             "birthDate":req.body.birthDate,
+            "age":req.body.age,
             "gender":req.body.gender,
             "address":req.body.address,
             "donate":req.body.donate
@@ -57,6 +58,11 @@ patientRouter.patch("/:id", async (req,res)=>{
     }
 });
 patientRouter.post("/",async (req,res)=>{
+    const birthdate = new Date(req.body.birthDate);
+    const now = new Date();
+    var diff = now.getTime()- birthdate.getTime();   
+    var age = Math.floor(diff / 31536000000);
+    console.log(age);
     const patient = new Patient({
       "_id":req.body._id,
       "password":req.body.password,
@@ -66,6 +72,7 @@ patientRouter.post("/",async (req,res)=>{
       "weight":req.body.weight,
       "phone":req.body.phone,
       "birthDate":req.body.birthDate,
+      "age":age,
       "gender":req.body.gender,
       "address":req.body.address,
       "donate":req.body.donate

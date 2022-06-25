@@ -43,6 +43,9 @@ const patientModule = myMongoose.Schema(
             type: Date,
             required : [true, "it must be Date"]
           },
+          "age": {
+            type:Number
+          },
           "gender": {
             type:String,
             enum : {

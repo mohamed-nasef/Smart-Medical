@@ -43,6 +43,7 @@ nurseRouter.patch("/:id", async (req,res)=>{
             "fullName":req.body.fullName,
             "phone":req.body.phone,
             "birthDate":req.body.birthDate,
+            "age":req.body.age,
             "gender":req.body.gender,
             "address":req.body.address,
             "department":req.body.department,
@@ -56,12 +57,18 @@ nurseRouter.patch("/:id", async (req,res)=>{
     }
 });
 nurseRouter.post("/",async (req,res)=>{
+    const birthdate = new Date(req.body.birthDate);
+    const now = new Date();
+    var diff = now.getTime()- birthdate.getTime();   
+    var age = Math.floor(diff / 31536000000);
+    console.log(age);
     const nurse = new Nurse({
         "_id":req.body._id,
         "password":req.body.password,
         "fullName":req.body.fullName,
         "phone":req.body.phone,
         "birthDate":req.body.birthDate,
+        "age":age,
         "gender":req.body.gender,
         "address":req.body.address,
         "department":req.body.department,
