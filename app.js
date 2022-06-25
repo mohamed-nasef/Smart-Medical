@@ -12,7 +12,7 @@ const dPatientSchedule = require("./routers/docPatScheduleRouters");
 const nPatientSchedule = require("./routers/nurPatScheduleRouters");
 const nurseSchedule = require("./routers/nurseScheduleRouters");
 const doctorSchedule = require("./routers/doctorScheduleRouters");
-
+const medicalRecord = require("./routers/medicalRecordRouters");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -24,6 +24,8 @@ app.use("/dpatient",dPatientSchedule);
 app.use("/npatient",nPatientSchedule);
 app.use("/nurseschedule",nurseSchedule);
 app.use("/doctorschedule",doctorSchedule);
+app.use("/medicalrecord",medicalRecord);
+
 
 
 
