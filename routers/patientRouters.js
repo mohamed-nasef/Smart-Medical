@@ -13,6 +13,17 @@ patientRouter.get("/", async (req,res)=>{
     }
     
 });
+patientRouter.get("/:id", async (req,res)=>{
+    
+    try{
+        const patient = await Patient.findById(req.params.id);
+        res.json(patient);
+    } catch(error)
+    {
+        console.log(error);
+    }
+    
+});
 patientRouter.delete("/:id", async (req,res)=>{
     
     try{
@@ -59,14 +70,14 @@ patientRouter.post("/",async (req,res)=>{
             "address":req.body.address,
             "donate":req.body.donate
         })
-    try{
-        patient.save().then((data)=>{
-            res.json({
-                "message":"patient created successfully",
-                "data":data
-            })
+       try{
+        const patientData = await patient.save()
+        res.json({
+            "message":"patient created successfully",
+            "data":patientData
         })
-    } catch (error) {
+    } 
+    catch (error) {
         console.log(error);
     }
 });
