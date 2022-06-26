@@ -36,6 +36,18 @@ dPatientScheduleRouter.get("/schedule", async (req,res)=>{
     
 });
 
+dPatientScheduleRouter.get("/schedule/:doctorID", async (req,res)=>{
+    
+    try{
+        const doctorpatientSch = await dPatSchedule.find({"doctorID":req.params.doctorID});
+        res.json(doctorpatientSch);
+    } catch(error)
+    {
+        console.log(error);
+    }
+    
+});
+
 dPatientScheduleRouter.post("/",async (req,res)=>{
     const doctor_patient = new dPatSchedule({
         "examination" : req.body.examination,
