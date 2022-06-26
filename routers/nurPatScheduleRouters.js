@@ -24,6 +24,31 @@ const nPatientScheduleRouter = express.Router();
     
 });
 
+
+nPatientScheduleRouter.get("/schedule", async (req,res)=>{
+    
+    try{
+        const nursepatientSch = await nPatSchedule.find();
+        res.json(nursepatientSch);
+    } catch(error)
+    {
+        console.log(error);
+    }
+    
+});
+
+nPatientScheduleRouter.get("/schedule/:nurseID", async (req,res)=>{
+    
+    try{
+        const nursepatientSch = await nPatSchedule.find({"nurseID":req.params.nurseID});
+        res.json(nursepatientSch);
+    } catch(error)
+    {
+        console.log(error);
+    }
+    
+});
+
 nPatientScheduleRouter.post("/",async (req,res)=>{
     const nurse_patient = new nPatSchedule({
         "examination" : req.body.examination,
