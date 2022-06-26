@@ -26,6 +26,17 @@ const medicalRecordRouter = express.Router();
     
 });
 
+medicalRecordRouter.get("/:patientID", async (req,res)=>{
+    try{
+        const medical_record = await medicalRecord.find({"patientID":req.params.patientID});
+        res.json(medical_record);
+    } catch(error)
+    {
+        console.log(error);
+    }
+    
+});
+
 medicalRecordRouter.post("/",upload.single('medicalPic'),async (req,res)=>{
     const medicalrecord = new medicalRecord({
         "day": req.body.day,
