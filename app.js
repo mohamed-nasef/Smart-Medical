@@ -2,6 +2,7 @@ const cors =require('cors');
 const bodyParser = require('body-parser');
 const express = require("express");
 const myMongoose=require('mongoose');
+const multer=require("multer");
 const connectionString="mongodb+srv://smartmedic:smartmedic2022@smartmedic.r5ddgad.mongodb.net/smartmedical?retryWrites=true&w=majority"
 const app = express();
 var port = process.env.PORT || 8080;

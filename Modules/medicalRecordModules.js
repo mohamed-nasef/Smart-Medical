@@ -37,6 +37,9 @@ const medicalRecordModule = myMongoose.Schema(
       "expired":{
         type:Boolean,
         default:false
+      },
+      "medicalPic":{
+        type : String
       }
     }
 )

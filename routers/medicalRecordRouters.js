@@ -1,6 +1,8 @@
 const Patient = require("../Modules/patientModules");
 const medicalRecord = require("../Modules/medicalRecordModules");
+const upload = require("../middleware/upload");
 const express = require("express");
+const { single } = require("../middleware/upload");
 const medicalRecordRouter = express.Router();
 
  medicalRecordRouter.get("/", async (req,res)=>{
@@ -24,7 +26,7 @@ const medicalRecordRouter = express.Router();
     
 });
 
-medicalRecordRouter.post("/",async (req,res)=>{
+medicalRecordRouter.post("/",upload.single('medicalPic'),async (req,res)=>{
     const medicalrecord = new medicalRecord({
         "day": req.body.day,
         "examination": req.body.examination,
@@ -35,8 +37,12 @@ medicalRecordRouter.post("/",async (req,res)=>{
         "note": req.body.note,
         "patientID": req.body.patientID,
         "doctorID": req.body.doctorID,
-        "expired" : req.body.expired
+        "expired" : req.body.expired,
         })
+        if(req.file)
+        {
+            medicalrecord.medicalPic =req.file.path
+        }
        try{
         const medicalrecordData = await medicalrecord.save()
         res.json({
