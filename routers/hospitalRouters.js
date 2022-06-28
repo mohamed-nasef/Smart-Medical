@@ -5,11 +5,11 @@ const express = require("express");
 const hospitalRouter = express.Router();
 
  hospitalRouter.get("/", async (req,res)=>{
-    const doctor_Schedule = await Hospital.aggregate([
+    const doctorHospital = await Hospital.aggregate([
         {
           $lookup:
             {
-              from: "doctorschedules",
+              from: "doctor",
               localField: "_id",
               foreignField: "doctorID",
               as: "doctor_Schedule"
@@ -17,7 +17,7 @@ const hospitalRouter = express.Router();
        }
      ])
     try{
-        res.json(doctor_Schedule);
+        res.json(doctorHospital);
     } catch(error)
     {
         console.log(error);
