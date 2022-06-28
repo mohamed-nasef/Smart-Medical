@@ -53,6 +53,7 @@ medicalRecordRouter.post("/",upload.single('medicalPic'),async (req,res)=>{
         if(req.file)
         {
             medicalrecord.medicalPic =req.file.path
+            res.send(req.file.medicalRecord.medicalPic)
         }
        try{
         const medicalrecordData = await medicalrecord.save()
