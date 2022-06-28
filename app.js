@@ -34,15 +34,6 @@ app.use("/medicalrecord",medicalRecord);
 
 
 
-
-myMongoose.connect(connectionString,()=>{
-    console.log('connect with data successfully')
-    app.listen(port,()=>{
-        console.log(`Runinng on port ${port}`);
-    })
-});
-
-
 io.on('connection', (socket) => {
     const username = socket.handshake.query.username
     socket.on('message', (data) => {
@@ -56,3 +47,11 @@ io.on('connection', (socket) => {
   
     })
   });
+
+myMongoose.connect(connectionString,()=>{
+    console.log('connect with data successfully')
+    app.listen(port,()=>{
+        console.log(`Runinng on port ${port}`);
+    })
+});
+
