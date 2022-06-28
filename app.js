@@ -5,6 +5,11 @@ const myMongoose=require('mongoose');
 const multer=require("multer");
 const connectionString="mongodb+srv://smartmedic:smartmedic2022@smartmedic.r5ddgad.mongodb.net/smartmedical?retryWrites=true&w=majority"
 const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+const messages = []
 var port = process.env.PORT || 8080;
 const patient = require("./routers/patientRouters");
 const doctor = require("./routers/doctorRouters");
@@ -38,3 +43,16 @@ myMongoose.connect(connectionString,()=>{
 });
 
 
+io.on('connection', (socket) => {
+    const username = socket.handshake.query.username
+    socket.on('message', (data) => {
+      const message = {
+        message: data.message,
+        senderUsername: username,
+        sentAt: Date.now()
+      }
+      messages.push(message)
+      io.emit('message', message)
+  
+    })
+  });
