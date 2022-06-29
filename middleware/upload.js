@@ -1,32 +1,22 @@
+const express = require("express");
 const multer = require("multer");
-const path = require("path");
+const fs = require("fs");
 
+// constant
+const app = express();
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads/')
-    },
-    filename: function (req, file, cb) {
-    //    let ext = path.extname(file.originalname);
-        cb(null,Date.now()+file.originalname);
-    }
-  })
-  
-  const upload = multer({ 
-    storage: storage,
-    fileFilter:(req,file,callback)=>{
-        if(file.mimetype == "image/png" || file.mimetype == "image/jpg")
-        {
-            callback(null,true)
-        }
-        else
-        {
-            console.log("only jpg or png")
-            callback(null,false)
-        }
-    },
-    limits: {
-        fileSize : 1024*1024*5
-    }
-})
+  destination: (req, file, callback) => {
+    const dir = "uploads/";
+    !fs.existsSync(dir) && fs.mkdirSync(dir);
+    callback(null, "uploads/");
+  },
+  filename: (req, file, callback) => {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    let ext = file.originalname.lastIndexOf(".");
+    ext = file.originalname.substring(ext + 1);
+    callback(null, `${file.fieldname}-${uniqueSuffix}.${ext}`);
+  },
+});
+const upload = multer({ storage });
 
 module.exports = upload

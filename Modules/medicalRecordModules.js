@@ -14,10 +14,9 @@ const medicalRecordModule = myMongoose.Schema(
       },
       "prescription" : {
         type:String,
-        required:true
       },
-      "dose":  {type: Number , required:true},
-      "period":{type:String  , required:true},
+      "dose":  {type: Number },
+      "period":{type:String },
       "nextAppointment":{
         type:Date
       },
@@ -26,7 +25,6 @@ const medicalRecordModule = myMongoose.Schema(
       },
       "doctorID":{
         type: String,
-        required : true,
         match: [/^([d]|[D])[0-9]{14}$/,'It must be like ( D or d + National Id)']
       },
       "patientID":{
@@ -38,8 +36,9 @@ const medicalRecordModule = myMongoose.Schema(
         type:Boolean,
         default:false
       },
-      "medicalPic":{
-        type : String
+      "medicalPic":
+      {
+        type:Object
       }
     }
 )

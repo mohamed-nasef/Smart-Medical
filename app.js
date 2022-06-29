@@ -19,9 +19,29 @@ const nPatientSchedule = require("./routers/nurPatScheduleRouters");
 const nurseSchedule = require("./routers/nurseScheduleRouters");
 const doctorSchedule = require("./routers/doctorScheduleRouters");
 const medicalRecord = require("./routers/medicalRecordRouters");
+const upload = require("./middleware/upload");
+var fs = require('fs');
+
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.json());
+
+/*app.post("/upload/single", upload.single("file"), (req, res) => {
+  res.json({ file: req.file });
+});
+app.post("/upload/multiple", upload.array("file", 4), (req, res) => {
+  res.json({ files: req.files });
+});*/
+
+
+app.use("/photo/:filename",function(req,res){
+  fs.readFile(`./uploads/${req.params.filename}`, (err, data)=>{
+    if (err) throw err; // Fail if the file can't be read.
+      res.writeHead(200, {'Content-Type': 'image/png'});
+      res.end(data); // Send the file data to the browser.
+  });
+})
 
 app.use("/patient",patient);
 app.use("/doctor",doctor);
@@ -52,7 +72,7 @@ io.on('connection', (socket) => {
     console.log(error);
   }
   });
-  
+
 myMongoose.connect(connectionString,()=>{
     console.log('connect with data successfully')
     app.listen(port,()=>{

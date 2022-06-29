@@ -5,7 +5,7 @@ const express = require("express");
 const { single } = require("../middleware/upload");
 const medicalRecordRouter = express.Router();
 
- medicalRecordRouter.get("/", async (req,res)=>{
+medicalRecordRouter.get("/", async (req,res)=>{
     const medical_record = await Patient.aggregate([
         {
           $lookup:
@@ -37,6 +37,7 @@ medicalRecordRouter.get("/:patientID", async (req,res)=>{
     
 });
 
+
 medicalRecordRouter.post("/",upload.single('medicalPic'),async (req,res)=>{
     const medicalrecord = new medicalRecord({
         "day": req.body.day,
@@ -49,12 +50,8 @@ medicalRecordRouter.post("/",upload.single('medicalPic'),async (req,res)=>{
         "patientID": req.body.patientID,
         "doctorID": req.body.doctorID,
         "expired" : req.body.expired,
+        "medicalPic":req.file
         })
-        if(req.file)
-        {
-            medicalrecord.medicalPic =req.file.path
-            res.send(req.file.medicalRecord.medicalPic)
-        }
        try{
         const medicalrecordData = await medicalrecord.save()
         res.json({
