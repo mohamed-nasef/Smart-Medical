@@ -4,15 +4,39 @@ const Nurse = require("../Modules/nurseModules");
 const express = require("express");
 const hospitalRouter = express.Router();
 
- hospitalRouter.get("/", async (req,res)=>{
+hospitalRouter.get("/:id", async (req,res)=>{
+    
+    try{
+        const hospital = await Hospital.findById(req.params.id);
+        res.json(hospital);
+    } catch(error)
+    {
+        console.log(error);
+    }
+    
+});
+
+hospitalRouter.get("/", async (req,res)=>{
+    
+    try{
+        const hospital = await Hospital.find();
+        res.json(hospital);
+    } catch(error)
+    {
+        console.log(error);
+    }
+    
+});
+
+ /*hospitalRouter.get("/doctor", async (req,res)=>{
     const doctorHospital = await Hospital.aggregate([
         {
           $lookup:
             {
-              from: "doctor",
+              from: "doctors",
               localField: "_id",
-              foreignField: "doctorID",
-              as: "doctor_Schedule"
+              foreignField: "hospitalID",
+              as: "hospital_doctor"
             }
        }
      ])
@@ -25,18 +49,42 @@ const hospitalRouter = express.Router();
     
 });
 
+hospitalRouter.get("/nurse", async (req,res)=>{
+    console.log("safgjhdsa");
+    const nurseHospital = await Nurse.aggregate([
+        {
+          $lookup:
+            {
+              from: "hospitals",
+              localField: "hospitalID",
+              foreignField: "_id",
+              as: "hospital_nurse"
+            }
+       }
+     ])
+    try{
+        res.json(nurseHospital);
+    } catch(error)
+    {
+        console.log(error);
+    }
+    
+});*/
+
 hospitalRouter.post("/",async (req,res)=>{
-    const doctor = new doctorSchedule({
-        "day" : req.body.day,
-        "from" : req.body.from,
-        "to" : req.body.to,
-        "doctorID" : req.body.doctorID
+    const hospital = new Hospital({
+            "_id":req.body._id,
+            "password":req.body.password,
+            "name":req.body.name,
+            "address":req.body.address,
+            "phone":req.body.phone,
+            "departments":req.body.departments
         })
        try{
-        const doctorData = await doctor.save()
+        const hospitalData = await hospital.save()
         res.json({
-            "message":"doctor Schedule created successfully",
-            "data":doctorData
+            "message":"hospital created successfully",
+            "data":hospitalData
         })
     } 
     catch (error) {

@@ -19,20 +19,17 @@ const nPatientSchedule = require("./routers/nurPatScheduleRouters");
 const nurseSchedule = require("./routers/nurseScheduleRouters");
 const doctorSchedule = require("./routers/doctorScheduleRouters");
 const medicalRecord = require("./routers/medicalRecordRouters");
+const hospital = require("./routers/hospitalRouters");
 const upload = require("./middleware/upload");
+const hospitalDoctor = require("./routers/hospitalDoctorRouters")
+const hospitalNurse = require("./routers/hospitalNurseRouters")
+
 var fs = require('fs');
 
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
-
-/*app.post("/upload/single", upload.single("file"), (req, res) => {
-  res.json({ file: req.file });
-});
-app.post("/upload/multiple", upload.array("file", 4), (req, res) => {
-  res.json({ files: req.files });
-});*/
 
 
 app.use("/photo/:filename",function(req,res){
@@ -43,6 +40,9 @@ app.use("/photo/:filename",function(req,res){
   });
 })
 
+app.use("/hospitaldoctor",hospitalDoctor);
+app.use("/hospitalnurse",hospitalNurse);
+app.use("/hospital",hospital);
 app.use("/patient",patient);
 app.use("/doctor",doctor);
 app.use("/nurse",nurse);
