@@ -35,7 +35,7 @@ app.use(express.json());
 app.use("/photo/:filename",function(req,res){
   fs.readFile(`./uploads/${req.params.filename}`, (err, data)=>{
     if (err) throw err; // Fail if the file can't be read.
-      res.writeHead(200, {'Content-Type': 'image/png'});
+      res.writeHead(200, {'Content-Type': 'image/png || image/jpeg'});
       res.end(data); // Send the file data to the browser.
   });
 })
