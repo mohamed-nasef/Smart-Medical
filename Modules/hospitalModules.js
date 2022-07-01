@@ -24,7 +24,7 @@ const hospitalModule = myMongoose.Schema(
             type:String,
             required : true
           },
-          "departments":[{type:String}]
+          "departments":{type:String}
     }
 )
 module.exports=myMongoose.model("hospital",hospitalModule);

@@ -28,49 +28,6 @@ hospitalRouter.get("/", async (req,res)=>{
     
 });
 
- /*hospitalRouter.get("/doctor", async (req,res)=>{
-    const doctorHospital = await Hospital.aggregate([
-        {
-          $lookup:
-            {
-              from: "doctors",
-              localField: "_id",
-              foreignField: "hospitalID",
-              as: "hospital_doctor"
-            }
-       }
-     ])
-    try{
-        res.json(doctorHospital);
-    } catch(error)
-    {
-        console.log(error);
-    }
-    
-});
-
-hospitalRouter.get("/nurse", async (req,res)=>{
-    console.log("safgjhdsa");
-    const nurseHospital = await Nurse.aggregate([
-        {
-          $lookup:
-            {
-              from: "hospitals",
-              localField: "hospitalID",
-              foreignField: "_id",
-              as: "hospital_nurse"
-            }
-       }
-     ])
-    try{
-        res.json(nurseHospital);
-    } catch(error)
-    {
-        console.log(error);
-    }
-    
-});*/
-
 hospitalRouter.post("/",async (req,res)=>{
     const hospital = new Hospital({
             "_id":req.body._id,
