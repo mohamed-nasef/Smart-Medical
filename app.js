@@ -39,7 +39,11 @@ app.use("/photo/:filename",function(req,res){
         res.end(data); // Send the file data to the browser.
   });
 })
-
+/*
+app.post("/uploads", upload.single("medicalPic"), (req, res) => {
+  res.json({ medicalPic: req.file });
+});
+*/
 app.use("/hospitaldoctor",hospitalDoctor);
 app.use("/hospitalnurse",hospitalNurse);
 app.use("/hospital",hospital);

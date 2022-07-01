@@ -1,5 +1,6 @@
 const Nurse = require("../Modules/nurseModules");
 const nPatSchedule = require("../Modules/nurPatScheduleModules");
+const Patient = require("../Modules/patientModules");
 const express = require("express");
 const nPatientScheduleRouter = express.Router();
 
@@ -36,6 +37,28 @@ nPatientScheduleRouter.get("/schedule", async (req,res)=>{
     }
     
 });
+
+nPatientScheduleRouter.get("/patient", async (req,res)=>{
+    const nurse_patient_Schedule = await Patient.aggregate([
+        {
+          $lookup:
+            {
+              from: "nursepatientschedules",
+              localField: "_id",
+              foreignField: "patientID",
+              as: "nurse_patient_Schedule"
+            }
+       }
+     ])
+    try{
+        res.json(nurse_patient_Schedule);
+    } catch(error)
+    {
+        console.log(error);
+    }
+    
+});
+
 
 nPatientScheduleRouter.get("/schedule/:nurseID", async (req,res)=>{
     
