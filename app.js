@@ -32,7 +32,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 
 
-app.use("/photo/:filename",async function(req,res){
+app.use("/photo/:filename",function(req,res){
   fs.readFile(`./uploads/${req.params.filename}`,(err, data)=>{
       if (err) throw err; // Fail if the file can't be read.
         res.writeHead(200, {'Content-Type': 'image/png || image/jpeg'});
