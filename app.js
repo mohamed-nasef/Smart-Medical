@@ -35,13 +35,8 @@ app.use(express.json());
 app.use("/photo/:filename",async function(req,res){
   fs.readFile(`./uploads/${req.params.filename}`,(err, data)=>{
       if (err) throw err; // Fail if the file can't be read.
-      try {
         res.writeHead(200, {'Content-Type': 'image/png || image/jpeg'});
         res.end(data); // Send the file data to the browser.
-      } catch (error) {
-        console.log("Cant get picture");
-        console.log(error);
-      }
   });
 })
 
