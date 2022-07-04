@@ -24,6 +24,17 @@ const nurseScheduleRouter = express.Router();
     
 });
 
+nurseScheduleRouter.get("/:nurseID", async (req,res)=>{
+    const nurse_Schedule = await nurseSchedule.find({"nurseID":req.params.nurseID})
+    try{
+        res.json(nurse_Schedule);
+    } catch(error)
+    {
+        console.log(error);
+    }
+    
+});
+
 nurseScheduleRouter.post("/",async (req,res)=>{
     const nurse = new nurseSchedule({
         "day" : req.body.day,

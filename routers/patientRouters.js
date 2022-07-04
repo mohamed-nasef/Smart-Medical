@@ -3,7 +3,6 @@ const express = require("express");
 const patientRouter = express.Router();
 
 patientRouter.get("/", async (req,res)=>{
-    
     try{
         const patient = await Patient.find();
         res.json(patient);
@@ -14,7 +13,6 @@ patientRouter.get("/", async (req,res)=>{
     
 });
 patientRouter.get("/:id", async (req,res)=>{
-    
     try{
         const patient = await Patient.findById(req.params.id);
         res.json(patient);
@@ -24,18 +22,7 @@ patientRouter.get("/:id", async (req,res)=>{
     }
     
 });
-patientRouter.delete("/:id", async (req,res)=>{
-    
-    try{
-        const patient = await Patient.deleteOne({"_id":req.params.id});
-        res.json(patient);
-    } catch(error)
-    {
-        console.log(error);
-    }
-});
 patientRouter.patch("/:id", async (req,res)=>{
-    
     try{
         const patient = await Patient.updateOne({"_id":req.params.id},{
             "_id":req.body._id,
@@ -51,6 +38,16 @@ patientRouter.patch("/:id", async (req,res)=>{
             "address":req.body.address,
             "donate":req.body.donate
         });
+        res.json(patient);
+    } catch(error)
+    {
+        console.log(error);
+    }
+});
+patientRouter.delete("/:id", async (req,res)=>{
+    
+    try{
+        const patient = await Patient.deleteOne({"_id":req.params.id});
         res.json(patient);
     } catch(error)
     {

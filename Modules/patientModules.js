@@ -4,7 +4,6 @@ const patientModule = myMongoose.Schema(
     {
         "_id": {
             type : String,
-           // pattern : "^([p]|[P])[0-9]{14}$",
             required :true ,
             match: [/^([p]|[P])[0-9]{14}$/,'It must be like ( P or p +National Id)']
 

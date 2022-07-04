@@ -1,16 +1,6 @@
-const cors =require('cors');
-const bodyParser = require('body-parser');
-const express = require("express");
-const myMongoose=require('mongoose');
-const multer=require("multer");
 const connectionString="mongodb+srv://smartmedic:smartmedic2022@smartmedic.r5ddgad.mongodb.net/smartmedical?retryWrites=true&w=majority"
-const app = express();
-const http = require('http');
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
-const messages = []
-var port = process.env.PORT || 8080;
+
+
 const patient = require("./routers/patientRouters");
 const doctor = require("./routers/doctorRouters");
 const nurse = require("./routers/nurseRouters");
@@ -23,7 +13,14 @@ const hospital = require("./routers/hospitalRouters");
 const upload = require("./middleware/upload");
 const hospitalDoctor = require("./routers/hospitalDoctorRouters")
 const hospitalNurse = require("./routers/hospitalNurseRouters")
+const express = require("express");
+const app = express();
+const myMongoose=require('mongoose');
+const multer=require("multer");
+const bodyParser = require('body-parser');
+const cors =require('cors');
 
+var port = process.env.PORT || 8080;
 var fs = require('fs');
 
 
@@ -39,11 +36,7 @@ app.use("/photo/:filename",function(req,res){
         res.end(data); // Send the file data to the browser.
   });
 })
-/*
-app.post("/uploads", upload.single("medicalPic"), (req, res) => {
-  res.json({ medicalPic: req.file });
-});
-*/
+
 app.use("/hospitaldoctor",hospitalDoctor);
 app.use("/hospitalnurse",hospitalNurse);
 app.use("/hospital",hospital);
@@ -56,26 +49,6 @@ app.use("/nurseschedule",nurseSchedule);
 app.use("/doctorschedule",doctorSchedule);
 app.use("/medicalrecord",medicalRecord);
 
-
-
-io.on('connection', (socket) => {
-  try {
-    console.log("a user connected");
-    const username = socket.handshake.query.username
-    socket.on('message', (data) => {
-      const message = {
-        message: data.message,
-        senderUsername: username,
-        sentAt: Date.now()
-      }
-      messages.push(message)
-      io.emit('message', message)
-  
-    })
-  } catch (error) {
-    console.log(error);
-  }
-  });
 
 myMongoose.connect(connectionString,()=>{
     console.log('connect with data successfully')

@@ -24,6 +24,17 @@ const doctorScheduleRouter = express.Router();
     
 });
 
+doctorScheduleRouter.get("/:doctorID", async (req,res)=>{
+    const doctor_Schedule = await doctorSchedule.find({"doctorID":req.params.doctorID})
+    try{
+        res.json(doctor_Schedule);
+    } catch(error)
+    {
+        console.log(error);
+    }
+    
+});
+
 doctorScheduleRouter.post("/",async (req,res)=>{
     const doctor = new doctorSchedule({
         "day" : req.body.day,
